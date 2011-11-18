@@ -15,4 +15,20 @@ class HomePageSpec extends GebSpec  {
 
         title == "60 minutes"
     }
+
+    def "Should list books"() {
+
+        given: "there are some books"
+            def b1 = new Book(title:"Title", author: "Mr. Men");
+            b1.save();
+
+        when: "I opeb the home page"
+
+            go "/60minutes"
+
+        then: "There is one book"
+
+            $("div.book").size() == 1
+
+    }
 }
