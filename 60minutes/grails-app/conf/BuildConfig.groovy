@@ -43,6 +43,7 @@ grails.project.dependency.resolution = {
     plugins {
         test ":tomcat:$grailsVersion"
         test ":hibernate:$grailsVersion"
+	test ":fixtures:1.0.7"
 
         test ":geb:$gebVersion"
         test ":spock:0.5-groovy-1.7"
