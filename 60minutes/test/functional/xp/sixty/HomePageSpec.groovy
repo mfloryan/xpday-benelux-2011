@@ -24,15 +24,15 @@ class HomePageSpec extends GebSpec  {
 
         when: "I opeb the home page"
 
-            go "/60minutes"
+            to HomePage
 
         then: "There are two books"
+            at(HomePage)
 
-            $("div.book").size() == 2
-            $("div.book", 0).find("div.title").text() == "Ms Naughty"
-            $("div.book", 0).find("div.author").text() == "Mr. Men"
-            $("div.book", 1).find("div.title").text() == "The Tao of Pooh"
-            $("div.book", 1).find("div.author").text() == "Benjamin Hoff"
+            firstBook.find("div.title").text() == "Ms Naughty"
+            firstBook.find("div.author").text() == "Mr. Men"
+            secondBook.find("div.title").text() == "The Tao of Pooh"
+            secondBook.find("div.author").text() == "Benjamin Hoff"
 
     }
 }
