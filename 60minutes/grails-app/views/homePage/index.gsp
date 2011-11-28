@@ -6,7 +6,10 @@
   <body>
 
       <g:each in="${books}" var="book">
-          <div class="book">${book.title}</div>
+          <div class="book">
+              <div class="title">${book.title}</div>
+              <div class="author">${book.author}</div>
+          </div>
       </g:each>
 
   </body>

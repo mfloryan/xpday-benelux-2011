@@ -19,16 +19,20 @@ class HomePageSpec extends GebSpec  {
     def "Should list books"() {
 
         given: "there are some books"
-            def b1 = new Book(title:"Title", author: "Mr. Men");
-            b1.save();
+            new Book(title:"Ms Naughty", author: "Mr. Men").save();
+            new Book(title:"The Tao of Pooh", author: "Benjamin Hoff").save();
 
         when: "I opeb the home page"
 
             go "/60minutes"
 
-        then: "There is one book"
+        then: "There are two books"
 
-            $("div.book").size() == 1
+            $("div.book").size() == 2
+            $("div.book", 0).find("div.title").text() == "Ms Naughty"
+            $("div.book", 0).find("div.author").text() == "Mr. Men"
+            $("div.book", 1).find("div.title").text() == "The Tao of Pooh"
+            $("div.book", 1).find("div.author").text() == "Benjamin Hoff"
 
     }
 }
