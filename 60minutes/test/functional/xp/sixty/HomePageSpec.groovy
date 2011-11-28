@@ -1,8 +1,11 @@
 package xp.sixty
 
 import geb.spock.GebSpec
+import org.codehaus.groovy.grails.commons.ApplicationHolder
 
 class HomePageSpec extends GebSpec  {
+
+    def fixtureLoader = ApplicationHolder.application?.mainContext?.fixtureLoader
 
     def "Should show empty home page"() {
 
@@ -14,21 +17,26 @@ class HomePageSpec extends GebSpec  {
     then: "I see an empty page"
 
         title == "60 minutes"
+        $("div.book").size() == 0
     }
 
     def "Should list books"() {
 
-        given: "there are some books"
-            def b1 = new Book(title:"Title", author: "Mr. Men");
-            b1.save();
+        given: "I have the Mr. Happy book"
 
-        when: "I opeb the home page"
+            def fixture = fixtureLoader.load {
+                mrHappy(Book) {
+                    author = "Roger Hargreaves"
+                    title = "Mr. Happy"
+                }
+            }
+
+        when: "I open the home page"
 
             go "/60minutes"
 
         then: "There is one book"
 
             $("div.book").size() == 1
-
     }
 }
