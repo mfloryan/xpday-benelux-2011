@@ -7,6 +7,10 @@ class HomePageSpec extends GebSpec  {
 
     def fixtureLoader = ApplicationHolder.application?.mainContext?.fixtureLoader
 
+    def setup() {
+		fixtureLoader.load "tearDown"
+	}
+
     def "Should show empty home page"() {
 
     given: "An empty app"
