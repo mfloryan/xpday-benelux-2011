@@ -7,8 +7,7 @@ class HomePageSpec extends GebSpec  {
     def setup()
     {
         def books = Book.getAll()
-        books.each { book -> book.delete(flush:true) }
-
+        books.each { book -> book.delete() }
     }
 
     def "Should show empty home page"() {
@@ -27,7 +26,7 @@ class HomePageSpec extends GebSpec  {
 
         given: "there are some books"
             new Book(title:"Ms Naughty", author: "Mr. Men").save();
-            new Book(title:"The Tao of Pooh", author: "Benjamin Hoff").save();
+            new Book(title:"Watchmen", author: "Alan Moore").save();
 
         when: "I open the home page"
             to HomePage
@@ -37,23 +36,39 @@ class HomePageSpec extends GebSpec  {
 
             firstBook.find("div.title").text() == "Ms Naughty"
             firstBook.find("div.author").text() == "Mr. Men"
-            secondBook.find("div.title").text() == "The Tao of Pooh"
-            secondBook.find("div.author").text() == "Benjamin Hoff"
+            secondBook.find("div.title").text() == "Watchmen"
+            secondBook.find("div.author").text() == "Alan Moore"
     }
 
     def "Should be able to like a book"() {
         given: "a book with no likes"
-            new Book(title:"The Tao of Pooh", author: "Benjamin Hoff").save();
+            new Book(title:"The Tao of Pooh Bear", author: "Benjamin Hoff").save();
 
         when: "I open the home page"
             to HomePage
 
         and: "I like the book"
-            firstBook.find("input[value=Like]").click()
+            bookWithTitle("The Tao of Pooh Bear").find("input[value=Like]").click()
 
         then: "The book has been liked once"
             at(HomePage)
 
-            firstBook.find("div.likes").text() == "1 Likes"
+            bookWithTitle("The Tao of Pooh Bear").find("div.likes").text() == "1 Like"
+    }
+
+    def "Should be able to like a book more than once"() {
+        given: "a book with one likes"
+            new Book(title:"The Tao of Pooh", author: "Benjamin Hoff", likes: 1).save();
+
+        when: "I open the home page"
+            to HomePage
+
+        and: "I like the book"
+            bookWithTitle("The Tao of Pooh").find("input[value=Like]").click()
+
+        then: "The book has been liked twice"
+            at(HomePage)
+
+            bookWithTitle("The Tao of Pooh").find("div.likes").text() == "2 Likes"
     }
 }

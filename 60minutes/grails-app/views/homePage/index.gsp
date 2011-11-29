@@ -10,7 +10,7 @@
                   <g:hiddenField name="id" value="${book?.id}"/>
                   <div class="title">${book.title}</div>
                   <div class="author">${book.author}</div>
-                  <div class="likes">${book.likes} Likes</div>
+                  <div class="likes">${book.likes} Like${book.likes == 1 ? "" : "s" }</div>
                   <g:submitButton name="Submit" value="Like"/>
               </g:form>
           </div>
