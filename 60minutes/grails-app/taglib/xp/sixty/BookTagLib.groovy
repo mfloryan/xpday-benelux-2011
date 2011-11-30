@@ -4,7 +4,10 @@ class BookTagLib {
  	static namespace = "sixty"
 
     def Book = { attrs ->
-        out << '<div class="book"></div>'
+        def book = attrs.remove("book")
+        out << '<div class="book">'
+        out << book.title
+        out << '</div>'
         out
     }
 }
